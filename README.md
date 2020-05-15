@@ -8,6 +8,22 @@ Inspired by the idea from [Recoil](https://recoiljs.org/) - state subscriptions 
 
 ## Examples
 
+```js
+import { createValueContainer, useValue } from "react-nano-state";
+
+// Value container can be exported and reused in any part of the tree.
+const valueContainer = createValueContainer("Type something");
+
+const Input = () => {
+  // All we need to subscribe to those sharable value changes.
+  const [value, setValue] = useValue(valueContainer);
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+  return <input onChange={onChange} value={value} />;
+};
+```
+
 [Basic example on codesandbox ](https://codesandbox.io/s/github/kof/react-nano-state/tree/master/examples/basic)
 
 ## Installation

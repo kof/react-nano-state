@@ -19,35 +19,20 @@ const CurrentValue = () => {
   return <p>Current value: {value}</p>;
 };
 
-const Status = ({ inputsAmount }) => {
-  // Using it here to render the correct amount of dispatchers for demonstration purpose,
-  // because upon unmounting, dispatchers are removed, but this component won't be upated.
-  const [_, forceUpdate] = React.useReducer((sw) => !sw, false);
-  React.useEffect(() => {
-    forceUpdate();
-  }, [inputsAmount]);
-
-  return (
-    <React.Fragment>
-      <p>Inputs: {inputsAmount}</p>
-      <p>Total listeners: {valueContainer.dispatchers.size}</p>
-    </React.Fragment>
-  );
-};
-
 const App = () => {
   const [inputsAmount, setInputsAmount] = React.useState(2);
 
   return (
     <React.Fragment>
-      Make sure you reload codesandbox after any changes, hot reload doesn't
-      work in this case.
+      <p>
+        Make sure you reload codesandbox after any changes, hot reload doesn't
+        work in this case.
+      </p>
       <p>
         {new Array(inputsAmount).fill(0).map((_, index) => (
           <Input key={index} />
         ))}
       </p>
-      <Status inputsAmount={inputsAmount} />
       <CurrentValue />
       <button
         onClick={() => {
