@@ -1,0 +1,9 @@
+{
+  "name": "react-nano-state-basic-example",
+  "version": "0.1.0",
+  "dependencies": {
+    "react-nano-state": ">=0.1.0",
+    "react": ">=0.16.0",
+    "react-dom": ">=0.16.0"
+  }
+}
