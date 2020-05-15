@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "module": "src/index.js",
   "author": "Oleg Isonen",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/kof/react-nano-state"
