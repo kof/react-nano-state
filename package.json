@@ -2,9 +2,13 @@
   "name": "react-nano-state",
   "description": "Fast state that can be shared across components outside of the React tree.",
   "version": "0.2.0",
-  "module": "src/index.js",
+  "main": "src/index.js",
+  "type": "module",
   "author": "Oleg Isonen",
   "license": "MIT",
+  "engines": {
+    "node": ">=13.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kof/react-nano-state"
@@ -22,5 +26,9 @@
   ],
   "peerDependencies": {
     "react": ">=16.8"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
