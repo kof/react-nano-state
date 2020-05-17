@@ -1,4 +1,4 @@
-# react-nano-state
+# Nano State - sharable state for React
 
 Fast state that can be shared across components outside of the React tree.
 
@@ -12,19 +12,57 @@ Inspired by the idea from [Recoil](https://recoiljs.org/) - state subscriptions 
 import { createValueContainer, useValue } from "react-nano-state";
 
 // Value container can be exported and reused in any part of the tree.
-const valueContainer = createValueContainer("Type something");
+const searchContainer = createValueContainer("Type the search");
 
-const Input = () => {
+const SearchInput = () => {
   // All we need to subscribe to those sharable value changes.
-  const [value, setValue] = useValue(valueContainer);
+  const [search, setSearch] = useValue(searchContainer);
   const onChange = (event) => {
-    setValue(event.target.value);
+    setSearch(event.target.value);
   };
   return <input onChange={onChange} value={value} />;
 };
 ```
 
 [Basic example on codesandbox ](https://codesandbox.io/s/github/kof/react-nano-state/tree/master/examples/basic)
+
+## API
+
+### Value container
+
+A value container is an object that can be shared across the code base and used to subscribe to the value.
+
+```js
+// value-containers.js
+import { createValueContainer } from "react-nano-state";
+export const searchContainer = createValueContainer(initialValue);
+```
+
+### Hook into the value
+
+It is very similar to React's `useState` with the difference that you access a shared state.
+
+```js
+import { useValue } from "react-nano-state";
+import { searchContainer } from "./value-containers";
+
+const SearchInput = () => {
+  const [search, setSearch] = useValue(searchContainer);
+  const onChange = (event) => {
+    setSearch(event.target.value);
+  };
+  return <input onChange={onChange} value={search} />;
+};
+```
+
+### Update value from outside
+
+You can update the value outside of React components and components using it will receive the update.
+
+```js
+import { searchContainer } from "./value-containers";
+searchContainer.dispatch(newSearch);
+```
 
 ## Installation
 
