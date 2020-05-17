@@ -5,7 +5,11 @@ export const createValueContainer = (initialValue) => {
   container.dispatch = (value) => {
     if (value === container.value) return;
     container.value = value;
-    const dispatchers = container.dispatchers.values();
+    const dispatchers = container.dispatchers.keys();
+    // Just in case concurrent React didn't run `useEffect` cleanup,
+    // we forget potentially paused components.
+    // They will be re-registered as soon as component updates.
+    container.dispatchers = new Map();
     for (const dispatch of dispatchers) {
       dispatch(value);
     }
@@ -14,12 +18,16 @@ export const createValueContainer = (initialValue) => {
 };
 
 export const useValue = (container) => {
-  const ref = React.useRef();
   const [value, dispatch] = React.useState(container.value);
-  // When component unmounts, we want to forget it's dispatcher reference.
-  React.useEffect(() => () => container.dispatchers.delete(ref), []);
-  // We always safe the latest known dispatch reference based on component instance.
-  container.dispatchers.set(ref, dispatch);
-
+  React.useDebugValue("Nano State");
+  React.useEffect(() => {
+    // Safe the latest known dispatch reference inside of an effect
+    // to make sure component has fully rendered before we "subscribe".
+    container.dispatchers.set(dispatch);
+    // When component "unmounts", we want to forget it's dispatcher reference.
+    // This will also happen upon updates before the effect,
+    // but that's ok, this op is cheap.
+    return () => container.dispatchers.delete(dispatch);
+  });
   return [value, container.dispatch];
 };
