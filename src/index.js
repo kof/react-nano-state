@@ -1,9 +1,19 @@
 import * as React from "react";
 
-export const createValueContainer = (initialValue) => ({
-  value: initialValue,
-  dispatchers: new Map(),
-});
+const dispatchersMap = new Map();
+
+export const createValueContainer = (initialValue) => {
+  const container = { value: initialValue, dispatchersMap };
+  container.setValue = (value) => {
+    if (value === container.value) return;
+    container.value = value;
+    const dispatchers = dispatchersMap.values();
+    for (const dispatcher of dispatchers) {
+      dispatcher();
+    }
+  };
+  return container;
+};
 
 const flip = (sw) => !sw;
 
@@ -12,16 +22,9 @@ export const useValue = (container) => {
   // A workaround to trigger force update using hooks.
   const [_, dispatch] = React.useReducer(flip, false);
   // When component unmounts, we want to forget it's dispatcher reference.
-  React.useEffect(() => () => container.dispatchers.delete(ref), []);
-  // We always save the latest known dispatch reference based on component instance.
-  container.dispatchers.set(ref, dispatch);
-  const setValue = (value) => {
-    if (value === container.value) return;
-    container.value = value;
-    const dispatchers = container.dispatchers.values();
-    for (const dispatcher of dispatchers) {
-      dispatcher();
-    }
-  };
-  return [container.value, setValue];
+  React.useEffect(() => () => container.dispatchersMap.delete(ref), []);
+  // We always safe the latest known dispatch reference based on component instance.
+  container.dispatchersMap.set(ref, dispatch);
+
+  return [container.value, container.setValue];
 };
