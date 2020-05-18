@@ -24,7 +24,7 @@ export const useValue = (container) => {
     // In case concurrent React delays the effect and another
     // component dispatches an update in the meantime.
     if (value !== container.value) {
-      dispatch(value);
+      dispatch(container.value);
     }
     // Safe the latest known dispatch reference inside of an effect
     // to make sure component has fully rendered before we "subscribe".
