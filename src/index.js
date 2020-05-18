@@ -21,6 +21,11 @@ export const useValue = (container) => {
   const [value, dispatch] = React.useState(container.value);
   React.useDebugValue("Nano State");
   React.useEffect(() => {
+    // In case concurrent React delays the effect and another
+    // component dispatches an update in the meantime.
+    if (value !== container.value) {
+      dispatch(value);
+    }
     // Safe the latest known dispatch reference inside of an effect
     // to make sure component has fully rendered before we "subscribe".
     container.dispatchers.set(dispatch);
