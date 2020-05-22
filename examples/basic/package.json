@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "react-nano-state": ">=0.1.0",
-    "react": ">=0.16.0",
-    "react-dom": ">=0.16.0"
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
   }
 }
