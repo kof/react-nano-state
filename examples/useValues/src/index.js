@@ -19,10 +19,11 @@ const clearValue = () => {
   countersValuesContainer.dispatch("counter1", 0);
 };
 
-function App3() {
+function App() {
   const [counter2Value, setCounter2Value] = useValues(
     countersValuesContainer,
-    "counter2"
+    "counter2",
+    0
   );
 
   useEffect(() =>
@@ -42,7 +43,9 @@ function App3() {
       <h5> manipulate counte2 directly</h5>
       <pre>
         counter2 :{" "}
-        {myValue === undefined ? "undefined" : JSON.stringify(counter2Value)}
+        {counter2Value === undefined
+          ? "undefined"
+          : JSON.stringify(counter2Value)}
       </pre>
       <button type="button" onClick={() => setCounter2Value(counter2Value + 1)}>
         increment counter2
