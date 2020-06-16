@@ -105,6 +105,23 @@ export const myValuesContainer = createValueContainer([
 ]);
 ```
 
+#### Initialize with the hook
+
+The variable will be initialized with the provided value **only** if it doesn't exist in the container.
+
+```js
+import { useValues } from "react-nano-state";
+import { myValuesContainer } from "./values-containers";
+
+const ReactComponent = (props) => {
+  const [value3, setValue3] = useValues(
+    myValuesContainer,
+    "value3",
+    "the initial value"
+  );
+};
+```
+
 ### Hook into a specific value by key
 
 It is very similar to React's `useState` with the difference that you access a shared state.
@@ -118,8 +135,9 @@ const handleValue3Change = event => {
 }
 
 const SearchInput = () => {
-  const [value1, setValue1] = useValues(myValuesContainer, 'value1');
-  const [value2, setValue2] = useValues(myValuesContainer, 'value2', 'this value will be ignored because  value2 was initialized already');
+  const [value1, setValue1] = useValues(myValuesContainer, 'value1'); // no initial value provided
+  // The initial value will be ignored because value2 was initialized up in our values-containers.js script
+  const [value2, setValue2] = useValues(myValuesContainer, 'value2', 'this value will be ignored');
   const [value3, setValue3] = useValues(myValuesContainer, 'value3', 'this is the initial value of the new value3');
   const onChange = (event) => {
     setValue1(event.target.value);
