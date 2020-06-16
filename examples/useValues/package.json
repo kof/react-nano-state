@@ -1,0 +1,10 @@
+{
+  "name": "react-nano-state-usevalues-example",
+  "version": "0.1.0",
+  "dependencies": {
+    "react-nano-state": "Ngorror/react-nano-state#useValues",
+    "react": ">=16.8",
+    "react-dom": ">=16.8",
+    "react-scripts": ">=3.2.0"
+  }
+}

@@ -60,8 +60,84 @@ const SearchInput = () => {
 You can update the value outside of React components and components using it will receive the update.
 
 ```js
+// value-containers.js
 import { searchContainer } from "./value-containers";
 searchContainer.dispatch(newSearch);
+```
+
+### Values container
+
+A values container is an object that can be shared across the code base and used to subscribe to values by key.
+
+```js
+// values-containers.js
+import { createValuesContainer } from "react-nano-state";
+export const myValuesContainer = createValueContainer();
+```
+
+### Initialize the values
+
+#### Initialize by Object
+
+You can initialize list of values by providing an Object. The key:value properties found directly in the object will be used to generate `valueContainer` objects.
+
+```js
+// values-containers.js
+import { createValuesContainer } from "react-nano-state";
+export const myValuesContainer = createValueContainer({
+  value1: "initial value",
+  value2: "another value",
+  // no value3 was declared jere
+});
+```
+
+#### Initialize by Array
+
+You can initialize list of values by providing an Array that contains Two-dimensional Arrays. The first item from the two-dimensional array will be used as key, the second one as value to generate `valueContainer` objects.
+
+```js
+// values-containers.js
+import { createValuesContainer } from "react-nano-state";
+export const myValuesContainer = createValueContainer([
+  ["value1", "initial value"],
+  ["value2", "another value"],
+  // no value3 was declared jere
+]);
+```
+
+### Hook into a specific value by key
+
+It is very similar to React's `useState` with the difference that you access a shared state.
+
+```js
+import { useValues } from "react-nano-state";
+import { myValuesContainer } from "./values-containers";
+
+const handleValue3Change = event => {
+  myValuesContainer.dispatch("value3", event.target.value);
+}
+
+const SearchInput = () => {
+  const [value1, setValue1] = useValues(myValuesContainer, 'value1');
+  const [value2, setValue2] = useValues(myValuesContainer, 'value2', 'this value will be ignored because  value2 was initialized already');
+  const [value3, setValue3] = useValues(myValuesContainer, 'value3', 'this is the initial value of the new value3');
+  const onChange = (event) => {
+    setValue1(event.target.value);
+  };
+  return <div>
+    <label>value1</label> <input onChange={onChange} value={value1} /><br/>
+    <label>value2</label> <input onChange={event =>setValue2(event.target.value)} value={value2} /><br/>
+    <label>value3</label> <input onChange={handleValue3Change} value={value3} /><br/>
+};
+```
+
+### Update value from outside
+
+You can update the value outside of React components and components using it will receive the update.
+
+```js
+import { myValuesContainer } from "./value-containers";
+myValuesContainer.dispatch("value3", event.target.value);
 ```
 
 ## Installation
