@@ -1,7 +1,7 @@
 {
   "name": "react-nano-state",
   "description": "Fast state that can be shared across components outside of the React tree.",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "main": "src/index.js",
   "type": "module",
   "author": "Oleg Isonen",

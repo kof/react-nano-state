@@ -1,7 +1,9 @@
 import * as React from "react";
 
 export const createValueContainer = (initialValue) => {
-  const container = { value: initialValue, dispatchers: new Map() };
+  const container = {};
+  container.value = initialValue;
+  container.dispatchers = new Map();
   container.dispatch = (value) => {
     if (value === container.value) return;
     container.value = value;
