@@ -1,6 +1,6 @@
-import * as React from "react";
+const React = require("react");
 
-export const createValueContainer = (initialValue) => {
+exports.createValueContainer = (initialValue) => {
   const container = {};
   container.value = initialValue;
   container.dispatchers = new Map();
@@ -19,7 +19,7 @@ export const createValueContainer = (initialValue) => {
   return container;
 };
 
-export const useValue = (container) => {
+exports.useValue = (container) => {
   const [value, dispatch] = React.useState(container.value);
   React.useDebugValue("Nano State");
   React.useEffect(() => {

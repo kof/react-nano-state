@@ -3,7 +3,7 @@
   "description": "Fast state that can be shared across components outside of the React tree.",
   "version": "0.2.8",
   "main": "src/index.js",
-  "type": "module",
+  "types": "src/index.d.ts",
   "author": "Oleg Isonen",
   "license": "MIT",
   "engines": {
