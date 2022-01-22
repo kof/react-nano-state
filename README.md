@@ -63,7 +63,3 @@ You can update the value outside of React components and components using it wil
 import { searchContainer } from "./value-containers";
 searchContainer.dispatch(newSearch);
 ```
-
-## Installation
-
-You can install and bundle this package using any tool you like. This repo will not add any code to support a particular way of installing or bundling, because it is using a standard ECMAScript and the tools you are using should know how to deal with it.
