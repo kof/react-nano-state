@@ -33,7 +33,7 @@ const SearchInput = () => {
 A value container is an object that can be shared across the code base and used to subscribe to the value.
 
 ```js
-// value-containers.js
+// nano-containers.js
 import { createValueContainer } from "react-nano-state";
 export const searchContainer = createValueContainer(initialValue);
 ```
@@ -44,7 +44,7 @@ It is very similar to React's `useState` with the difference that you access a s
 
 ```js
 import { useValue } from "react-nano-state";
-import { searchContainer } from "./value-containers";
+import { searchContainer } from "./nano-containers";
 
 const SearchInput = () => {
   const [search, setSearch] = useValue(searchContainer);
@@ -55,11 +55,20 @@ const SearchInput = () => {
 };
 ```
 
-### Update value from outside
+### Update value outside of component
 
 You can update the value outside of React components and components using it will receive the update.
 
 ```js
-import { searchContainer } from "./value-containers";
+import { searchContainer } from "./nano-containers";
 searchContainer.dispatch(newSearch);
+```
+
+### Subscribe value outside of component
+
+You can subscribe to the value outside of React components.
+
+```js
+import { searchContainer } from "./nano-containers";
+searchContainer.subscribe(console.log);
 ```

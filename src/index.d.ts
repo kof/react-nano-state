@@ -4,6 +4,7 @@ declare module "react-nano-state" {
   type ValueContainer<ValueType> = {
     value: ValueType;
     dispatch: Dispatch<ValueType>;
+    subscribe: (callback: (value: ValueType) => void) => void;
   };
 
   export function createValueContainer<ValueType>(

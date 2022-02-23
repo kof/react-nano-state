@@ -3,6 +3,7 @@ const React = require("react");
 exports.createValueContainer = (initialValue) => {
   const container = {};
   container.value = initialValue;
+  container.callbacks = new Map();
   container.dispatchers = new Map();
   container.dispatch = (value) => {
     if (value === container.value) return;
@@ -15,6 +16,13 @@ exports.createValueContainer = (initialValue) => {
     for (const dispatch of dispatchers) {
       dispatch(value);
     }
+    const callbacks = container.callbacks.keys();
+    for (const callback of callbacks) {
+      callback(value);
+    }
+  };
+  container.subscribe = (callback) => {
+    container.callbacks.set(callback);
   };
   return container;
 };
